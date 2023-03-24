@@ -1,10 +1,15 @@
 import tkinter as tk
 import csv
 import time
+import os
 
 class ActivityTracker:
-    def __init__(self, user):
-        self.user = user
+    def __init__(self):
+        self.user = os.getlogin()
+
+class ActivityTracker:
+    def __init__(self):
+        self.user = os.getlogin() # Get the system username
         self.activities = ['Idle', 'Biking', 'Running', 'Swimming', 'Walking']
         self.current_activity = 'Idle'
         self.start_time = time.time()
@@ -17,16 +22,18 @@ class ActivityTracker:
         self.start_time = time.time()
         
     def save_data(self):
-        with open('activity_log.csv', mode='w', newline='') as csv_file:
+        with open('activity_log.csv', mode='a', newline='') as csv_file:
             fieldnames = ['user', 'activity', 'time']
             writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-            writer.writeheader()
+            if csv_file.tell() == 0:
+                writer.writeheader() # write header only if the file is empty
             for row in self.data:
                 writer.writerow(row)
 
+
 # GUI setup
 root = tk.Tk()
-activity_tracker = ActivityTracker('John')
+activity_tracker = ActivityTracker()
 
 # Dropdown menu
 activity_var = tk.StringVar(root)
