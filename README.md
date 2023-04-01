@@ -1,2 +1,2 @@
 # Falcon
-a Repository of data analytic tutorials 
+a Repository of data analytic tools
